@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إلى طفلتي الغالية أبرار ❤️ | عذر ومحبة</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #030712;
+            color: #f3f4f6;
+            margin: 0;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* نافذة القلب الهندسي المتوهج */
+        .heart-canvas-container {
+            position: relative;
+            width: 100%;
+            max-width: 650px;
+            height: 300px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .center-name {
+            position: absolute;
+            font-size: 38px;
+            font-weight: 900;
+            background: linear-gradient(45deg, #ff4d6d, #ff758c, #ffb3c6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 25px rgba(255, 77, 109, 0.8);
+            letter-spacing: 3px;
+            animation: pulse 1.5s infinite alternate;
+            z-index: 10;
+            pointer-events: none;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); text-shadow: 0 0 20px rgba(255, 77, 109, 0.6); }
+            100% { transform: scale(1.08); text-shadow: 0 0 40px rgba(255, 77, 109, 1); }
+        }
+
+        .container {
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 77, 109, 0.3);
+            padding: 25px;
+            border-radius: 25px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.7);
+            max-width: 650px;
+            width: 100%;
+            text-align: center;
+            z-index: 20;
+        }
+        
+        .nav-tabs {
+            display: flex;
+            justify-content: space-around;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 10px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            width: 100%;
+            max-width: 650px;
+            border: 1px solid rgba(255,255,255,0.08);
+            z-index: 20;
+        }
+        .nav-link {
+            background: transparent;
+            border: none;
+            color: #94a3b8;
+            padding: 10px 14px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: 0.3s;
+        }
+        .nav-link.active {
+            background: #ff4d6d;
+            color: white;
+            box-shadow: 0 0 15px rgba(255, 77, 109, 0.5);
+        }
+
+        .page-content { display: none; }
+        .page-content.active { display: block; animation: fadeIn 0.4s ease-in-out; }
+
+        h1, h2, h3 { color: #ff6b81; margin-top: 0; }
+        p { font-size: 1.05rem; line-height: 1.9; color: #e2e8f0; text-align: justify; }
+
+        .auth-box input {
+            width: 85%; padding: 12px; margin: 12px 0;
+            border: 2px solid rgba(255, 77, 109, 0.4); border-radius: 12px;
+            background: rgba(0,0,0,0.4); color: white;
+            font-size: 1rem; text-align: center; outline: none;
+        }
+        button {
+            background: linear-gradient(135deg, #ff4d6d, #c9184a); color: white; border: none;
+            padding: 12px 28px; font-size: 1rem; border-radius: 12px;
+            cursor: pointer; transition: 0.3s; font-weight: bold;
+            box-shadow: 0 5px 15px rgba(209, 24, 74, 0.4);
+        }
+        button:hover { transform: translateY(-2px); }
+
+        .playlist-box {
+            background: rgba(0, 0, 0, 0.3); padding: 15px; border-radius: 15px; margin: 15px 0; text-align: right;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        .song-item {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.05);
+            color: #cbd5e1;
+        }
+        .song-item:last-child { border-bottom: none; }
+
+        .notepad {
+            background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255,107,129,0.3);
+            border-radius: 15px; padding: 20px; text-align: right; margin-top: 15px;
+        }
+        textarea {
+            width: 100%; height: 120px; padding: 10px;
+            border: none; background: transparent; font-family: inherit;
+            font-size: 1.05rem; line-height: 1.6; resize: none; outline: none;
+            border-bottom: 2px dashed #ff4d6d; color: white;
+        }
+        .note-item {
+            background: rgba(255,255,255,0.04); padding: 15px; margin: 12px 0;
+            border-radius: 12px; border-right: 6px solid #ff4d6d;
+            text-align: right; border: 1px solid rgba(255,255,255,0.05);
+        }
+        .note-actions { text-align: left; margin-top: 8px; }
+        .btn-sm { padding: 5px 12px; font-size: 0.85rem; margin-left: 5px; border-radius: 8px; }
+        .btn-del { background: #475569; }
+
+        .gallery-grid {
+            display: grid; grid-template-columns: 1fr; gap: 15px; margin-top: 15px;
+        }
+        @media(min-width: 480px) {
+            .gallery-grid { grid-template-columns: 1fr 1fr; }
+        }
+        .img-card {
+            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,107,129,0.2); border-radius: 15px; padding: 10px; text-align: center;
+        }
+        .img-card img {
+            width: 100%; border-radius: 12px; max-height: 250px; object-fit: cover; display: block; margin-bottom: 8px;
+        }
+
+        .apology-box {
+            background: rgba(255, 77, 109, 0.1);
+            border: 2px dashed #ff4d6d;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            text-align: right;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+
+    <!-- نافذة القلب البرمجي واسم أبرار -->
+    <div class="heart-canvas-container">
+        <div class="center-name">ABRAR</div>
+        <canvas id="heartCanvas"></canvas>
+    </div>
+
+    <!-- بوابة الحماية والخصوصية لتسجيل الدخول -->
+    <div id="auth-gate" class="container" style="display: block;">
+        <h2>بوابة الخصوصية والأمان 🔐</h2>
+        <p>أبرار.. أدخلي كلمة السر الخاصة بكِ لفتح رسالة الصلح وعيد الحب:</p>
+        <div class="auth-box">
+            <input type="password" id="password-input" placeholder="اكتبي كلمة السر هنا...">
+        </div>
+        <br>
+        <button onclick="handleAuth()">فتح الرسالة ❤️</button>
+    </div>
+
+    <!-- شريط التبديل بين صفحات الموقع (Tabs) -->
+    <div id="nav-bar" class="nav-tabs" style="display: none;">
+        <button class="nav-link active" onclick="switchPage('home-page', this)">رسالة الصلح 💌</button>
+        <button class="nav-link" onclick="switchPage('music-page', this)">أغانينا 🎵</button>
+        <button class="nav-link" onclick="switchPage('gallery-page', this)">ذكرياتنا 📸</button>
+        <button class="nav-link" onclick="switchPage('notes-page', this)">المفكرة المحمية 📜</button>
+    </div>
+
+    <!-- حاوية المحتوى الرئيسي للموقع -->
+    <div id="main-hub" class="container" style="margin-top: 0; display: none;">
+        
+        <!-- الصفحة 1: رسالة الصلح وعيد الحب -->
+        <div id="home-page" class="page-content active">
+            <h1></h1>إلى طفلتي المدللة   🌸</h1>
+            
+            <div class="apology-box">
+                <h3 style="color: #ff4d6d; margin-bottom: 10px;">عتب وزعل؟ عيوني لكِ وحدكِ! 🥺</h3>
+                <p>أبرار يا روحي، أنا بعرف إني زعلتك وبحق عليّ لما شفتي شي ضايقك.. بس وحق عيونك العسلية، ما في بهالدنيا كلها مخلوقة تملى عيني أو تعني لي شي غيركِ إنتي! غِيرتك عليّ وحرقة قلبك تاج على راسري وبتسوى الكون كله بـ عيني، لأنها دليل قاطع قديش أنا غالي عندك. وكل عام وأنتي عيدي وحبي الأبدي.. سامحيني، وأنا لكِ وحدكِ وبس ولآخر العمر.</p>
+            </div>
+
+            <p>أعلم أنكِ تصنعين الذكريات بطريقتكِ الدافية، وأنا اليوم أصنع لكِ هذا المَلاذ البرمجي ليكون شاهداً على أن قلبي مقفل ومحصن باسمكِ وحدكِ (ABRAR). لا البنات ولا الدنيا كلها تساوي ومضة من عيونكِ يا أجمل أشيائي!</p>
+        </div>
+
+        <!-- الصفحة 2: الأغاني -->
+        <div id="music-page" class="page-content">
+            <h2>صندوق الموسيقى الخاص بنا 🎵</h2>
+            <p style="text-align: center;">أغاني تهديها لقلبكِ لترواءي روحكِ وتنسي أي زعل:</p>
+            
+            <div class="playlist-box">
+                <div class="song-item">
+                    <span>1. الأغنية الخاصة الأولى 🎶</span>
+                    <button class="btn-sm" onclick="playTrack('https://files.catbox.moe/brxqug.m4a', 'الأغنية الأولى')">تشغيل</button>
+                </div>
+                <div class="song-item">
+                    <span>2. الأغنية الخاصة الثانية 🎶</span>
+                    <button class="btn-sm" onclick="playTrack('https://files.catbox.moe/0a0vk9.m4a', 'الأغنية الثانية')">تشغيل</button>
+                </div>
+            </div>
+            
+            <div style="margin-top: 20px; background: rgba(0,0,0,0.2); padding: 12px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05);">
+                <p id="current-track-status" style="text-align: center; font-weight: bold; margin: 0; color: #ff6b81;">المشغل متوقف حالياً ⏸</p>
+                <audio id="global-player" preload="auto" style="display: none;"></audio>
+                <button id="global-play-btn" onclick="toggleGlobalAudio()" style="margin-top: 10px; padding: 6px 15px; font-size: 0.85rem; display: none; border-radius: 8px; background: #ff4d6d; color: white; border: none; cursor: pointer;">إيقاف مؤقت</button>
+            </div>
+        </div>
+
+        <!-- الصفحة 3: الذكريات (صوركم الـ 14) -->
+        <div id="gallery-page" class="page-content">
+            <h2>معرض ذكرياتنا الأسطوري 📸</h2>
+            <p style="text-align: center;">صور تجمعنا وتحكي حكاية حبنا الصادقة:</p>
+            
+            <div class="gallery-grid">
+                <div class="img-card"><img src="https://i.ibb.co/qFsFsfjN/image.jpg" alt="Memory"><span>لقطة خاصة 🌸</span></div>
+                <div class="img-card"><img src="https://i.ibb.co/KxFXfQxK/image.jpg" alt="Memory"><span>لحظاتنا الدافئة ✨</span></div>
+                <div class="img-card"><img src="https://i.ibb.co/KxYsnndd/image.jpg" alt="Memory"><span>ذكريات لا تموت 📖</span></div>
+                <div class="img-card"><img src="https://i.ibb.co/PsnPnzk7/image.jpg" alt="Memory"><span>أجمل أشيائي 💘</span></div>
+                <div class="img-card"><img src="https://i.ibb.co/bgq8Qszq/image.jpg" alt="Memory"><span>طفلتي المدللة 🐿️</span></div>
+                <div class="img-card"><img src="https://i.ibb.co/mCt5XKwZ/image.jpg" alt="Memory"><span> 👑</span></div>
+                <div class="img-card"><img src="https://i.ibb.co/xSGPvrs7/image.jpg" alt="Memory"><span>حكايتنا الخاصة 📜</span></div>
+                <div class="img-card"><img src="https://i.ibb.co/4nkHbKcH/image.jpg" alt="Memory"><span>مَلاذ الأمان 🫂</span></div>
+                <div class="img-card"><img src="https://i.ibb.co/mFDh3nXY/image.jpg" alt="Memory"><span>نبضات القلب 💓</span></div>
+                <div class="img-card"><img src="https://i.ibb.co/WW5rQwKw/image.jpg" alt="Memory"><span>  🌸</span></div>
+                <div class="img-card"><img src="https://i.ibb.co/zW9hHg2J/image.jpg" alt="Memory"><span>عالمنا الخاص ✨</span></div>
+                <div class="img-card"><img src="https://i.ibb.co/Lzvhwhm9/image.jpg" alt="Memory"><span>أحلى الأيام 💫</span></div>
+                <div class="img-card"><img src="https://i.ibb.co/d4xqGgjP/image.jpg" alt="Memory"><span>شمعة الدرب 🕯️</span></div>
+                <div class="img-card"><img src="https://i.ibb.co/BVt9dNs7/image.jpg" alt="Memory"><span>معاكِ للأبد 🌹</span></div>
+            </div>
+        </div>
+
+        <!-- الصفحة 4: المفكرة -->
+        <div id="notes-page" class="page-content">
+            <h2>دفتر خواطركِ وسر حكايتنا 📜</h2>
+            <p style="text-align: center;">اكتبي كل ما بخاطركِ هنا، وكل حرف محفوظ بأمان تام:</p>
+            
+            <div class="notepad">
+                <input type="hidden" id="edit-index" value="-1">
+                <textarea id="note-textarea" placeholder="اكتبي ما يعصف بقلبكِ هنا يا قلبي..."></textarea>
+                <div style="text-align: left; margin-top: 10px;">
+                    <button id="save-btn" onclick="saveOrUpdateNote()">حفظ في الدفتر 💾</button>
+                </div>
+            </div>
+
+            <div style="margin-top: 25px; text-align: right;">
+                <h3>خواطركِ المحفوظة سابقاً:</h3>
+                <div id="notes-list"></div>
+            </div>
+
+            <!-- لوحة تحكم عمران السرية (تظهر فقط عند كتابة omran99) -->
+            <div id="omran-secret-panel" style="display: none; margin-top: 35px; background: rgba(120, 20, 30, 0.4); padding: 20px; border-radius: 15px; border: 2px dashed #ff4d6d;">
+                <h3 style="color: #ff6b81;">🥷 لوحة تحكم عمران السرية (مخفية عنها):</h3>
+                <p style="color: #cbd5e1; font-size: 0.95rem;">هنا تظهر كل الخواطر والنوتات التي تكتبها أبرار بصمت:</p>
+                <div id="omran-notes-list"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // رسم القلب الهندسي المتكون من الكلمات في خلفية الشاشة العليا
+        const canvas = document.getElementById('heartCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        function resizeCanvas() {
+            canvas.width = 320;
+            canvas.height = 300;
+        }
+        resizeCanvas();
+
+        function drawHeartWords() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+            
+            ctx.font = "bold 10px Arial";
+            ctx.fillStyle = "rgba(255, 107, 129, 0.45)";
+            ctx.textAlign = "center";
+
+            for (let scale = 7; scale <= 15; scale += 2) {
+                for (let i = 0; i < 100; i++) {
+                    let angle = i * (Math.PI * 2) / 100;
+                    let x = 16 * Math.pow(Math.sin(angle), 3);
+                    let y = -(13 * Math.cos(angle) - 5 * Math.cos(2 * angle) - 2 * Math.cos(3 * angle) - Math.cos(4 * angle));
+                    
+                    let screenX = centerX + x * scale;
+                    let screenY = centerY + y * scale;
+
+                    ctx.save();
+                    ctx.translate(screenX, screenY);
+                    ctx.rotate(angle * 0.2);
+                    ctx.fillText("I love you", 0, 0);
+                    ctx.restore();
+                }
+            }
+        }
+        drawHeartWords();
+
+        // وظائف البوابة والموقع
+        function handleAuth() {
+            const pass = document.getElementById('password-input').value.trim();
+            if(!pass) {
+                alert('الرجاء إدخال كلمة السر يا قلبي!');
+                return;
+            }
+
+            document.getElementById('auth-gate').style.display = 'none';
+            document.getElementById('nav-bar').style.display = 'flex';
+            document.getElementById('main-hub').style.display = 'block';
+
+            renderNotes();
+
+            if(pass === 'omran99') {
+                document.getElementById('omran-secret-panel').style.display = 'block';
+                renderNotesForOmran();
+            }
+        }
+
+        function switchPage(pageId, btnElement) {
+            document.querySelectorAll('.page-content').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
+            
+            document.getElementById(pageId).classList.add('active');
+            btnElement.classList.add('active');
+        }
+
+        function getNotes() { 
+            return JSON.parse(localStorage.getItem('abrar_real_notebook')) || []; 
+        }
+
+        function renderNotes() {
+            const notes = getNotes();
+            const listDiv = document.getElementById('notes-list');
+            if (notes.length === 0) {
+                listDiv.innerHTML = "<p style='text-align:center; color:#888;'>المفكرة فارغة حالياً.. اكتبِ أولى أسطركِ بالأعلى 🖋️</p>";
+                return;
+            }
+            listDiv.innerHTML = notes.map((n, index) => `
+                <div class="note-item">
+                    <span style="font-size: 0.8rem; color: #94a3b8;">${n.date}</span>
+                    <p style="margin: 5px 0; white-space: pre-wrap; font-size:1.05rem;">${n.text}</p>
+                    <div class="note-actions">
+                        <button class="btn-sm" onclick="loadNoteToEdit(${index})">تعديل</button>
+                        <button class="btn-sm btn-del" onclick="deleteNote(${index})">حذف</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderNotesForOmran() {
+            const notes = getNotes();
+            const listDiv = document.getElementById('omran-notes-list');
+            if (notes.length === 0) {
+                listDiv.innerHTML = "<p style='color:#cbd5e1;'>أبرار لم تكتب أي شيء في هذه المفكرة بعد.</p>";
+                return;
+            }
+            listDiv.innerHTML = notes.map(n => `
+                <div style="border-bottom: 1px solid rgba(255,255,255,0.1); padding: 8px 0; text-align: right;">
+                    <span style="font-size:0.75rem; color:#ffb3c6;">${n.date}</span>
+                    <p style="margin:5px 0; color:#f8fafc; white-space: pre-wrap;">${n.text}</p>
+                </div>
+            `).join('');
+        }
+
+        function saveOrUpdateNote() {
+            const textarea = document.getElementById('note-textarea');
+            const editIndex = parseInt(document.getElementById('edit-index').value);
+            const text = textarea.value.trim();
+            if (!text) return alert('الرجاء كتابة كلماتكِ أولاً!');
+
+            let notes = getNotes();
+            const timestamp = new Date().toLocaleString('ar-EG', { hour12: true });
+
+            if (editIndex === -1) {
+                notes.push({ text: text, date: timestamp });
+            } else {
+                notes[editIndex].text = text;
+                notes[editIndex].date = timestamp + " (تم التعديل)";
+                document.getElementById('edit-index').value = "-1";
+                document.getElementById('save-btn').innerText = "حفظ في الدفتر";
+            }
+            localStorage.setItem('abrar_real_notebook', JSON.stringify(notes));
+            textarea.value = '';
+            renderNotes();
+            alert('تم الحفظ والتحديث بنجاح داخل الدفتر ✨');
+        }
+
+        function loadNoteToEdit(index) {
+            const notes = getNotes();
+            document.getElementById('note-textarea').value = notes[index].text;
+            document.getElementById('edit-index').value = index;
+            document.getElementById('save-btn').innerText = "تحديث الخاطرة الحالية ✨";
+        }
+
+        function deleteNote(index) {
+            if (!confirm('هل أنتِ متأكدة من الحذف؟')) return;
+            let notes = getNotes();
+            notes.splice(index, 1);
+            localStorage.setItem('abrar_real_notebook', JSON.stringify(notes));
+            renderNotes();
+        }
+
+        let currentAudio = document.getElementById('global-player');
+        function playTrack(url, title) {
+            currentAudio.src = url;
+            currentAudio.play().then(() => {
+                document.getElementById('current-track-status').innerText = "جاري تشغيل: " + title + " 🎶";
+                document.getElementById('global-play-btn').style.display = 'inline-block';
+            }).catch(() => {
+                alert('حدث خطأ في تشغيل الملف، يرجى المحاولة مرة أخرى.');
+            });
+        }
+
+        function toggleGlobalAudio() {
+            if (currentAudio.paused) {
+                currentAudio.play();
+                document.getElementById('global-play-btn').innerText = "إيقاف مؤقت";
+            } else {
+                currentAudio.pause();
+                document.getElementById('global-play-btn').innerText = "تشغيل";
+            }
+        }
+    </script>
+</body>
+</html>
